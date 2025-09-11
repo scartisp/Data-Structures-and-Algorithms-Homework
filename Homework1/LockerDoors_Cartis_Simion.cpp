@@ -2,6 +2,8 @@
 using std::cout;
 using std::cin;
 using std::endl;
+#include<vector>
+using std::vector;
 
 int main() {
  // get user input for locker amount and passes
@@ -12,13 +14,13 @@ int main() {
   int passes;
   cin >> passes;
 
- // fill array
-  bool lockers[size];
+ // fill vector
+  vector<bool> lockers(size);
   for (int i = 0; i < size; ++i) {
     lockers[i] = false;
   }
 
-  // go through array i amount of times, if j + 1 (index + 1) % i+1 == 0, flip value 
+  // go through vector i amount of times, if j + 1 (index + 1) % i+1 == 0, flip value 
   for (int i = 0; i < passes; ++i) {
     for (int j = 0; j < size; ++j) {
       if((j+1)%(i+1) == 0) {
