@@ -1,0 +1,9 @@
+#ifndef _QUICKSORT_H_
+#define _QUICKSORT_H_
+#include<vector>
+using std::vector;
+
+void quickSort(vector<double>& toSort, int low, int high);
+int partition (vector<double>& toSort, int low, int high);
+void findPivot(vector<double>& toSort, int low, int middle, int high);
+#endif
