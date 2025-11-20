@@ -10,7 +10,8 @@ using std::vector;
 using std::swap;
 
 int main () {
-  vector<double> toSort = {5.0,7.0,1.0,3.0,19.0,10.3,54.0,5.0};
+  vector<double> toSort = {5,4,1,54,4,5};
+  //vector<double> toSort = {3,2,1};
     quickSort(toSort, 0, toSort.size()-1);
   
     for (int i = 0; i < toSort.size(); ++i) {
@@ -26,7 +27,7 @@ int main () {
 void quickSort(vector<double>& toSort, int low, int high) {
   if (low < high) {
     int s = partition(toSort, low, high);
-    quickSort(toSort, low, s-1);// sort sub-vector of values less than pivot
+    quickSort(toSort, low, s);// sort sub-vector of values less than pivot
     quickSort(toSort, s+1, high); // sort sub-vector of values greater than pivot
   }
 }
@@ -38,7 +39,7 @@ low, middle, and high indexes.
 int partition (vector<double>& toSort, int low, int high) {
   findPivot(toSort, low, low+(high-low)/2, high);
   double p = toSort[low];
-  int i = low;
+  int i = low-1;
   int j = high+1;
   while (true) {
     do {
@@ -47,8 +48,7 @@ int partition (vector<double>& toSort, int low, int high) {
     do {
       --j;
     } while (toSort[j] > p);
-    if (i > j) {
-      swap(toSort[j], toSort[low]);
+    if (i >= j) {
       return j;
     }
     swap(toSort[i], toSort[j]);
@@ -69,5 +69,5 @@ void findPivot(vector<double>& toSort, int low, int middle, int high) {
   if (toSort[low] > toSort[middle]) {
     swap(toSort[low], toSort[middle]);
   }
-  swap(toSort[low], toSort[middle]);
+    swap(toSort[low], toSort[middle]);
 }
