@@ -44,7 +44,6 @@ int partition (vector<double>& toSort, int low, int high) {
     do {
       ++i;
     } while (toSort[i] < p);
-    
     do {
       --j;
     } while (toSort[j] > p);
