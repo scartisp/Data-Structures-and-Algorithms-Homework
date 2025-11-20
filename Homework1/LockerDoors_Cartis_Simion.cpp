@@ -1,3 +1,4 @@
+// Simion Cartis
 #include<iostream>
 using std::cout;
 using std::cin;
