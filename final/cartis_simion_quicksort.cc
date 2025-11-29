@@ -17,7 +17,9 @@ int main(int argc, char* argv[]) {
   if (argc == 1) {
     vector<vector<string>> unsortedFiles = makeAllFiles();
     cout << "sorting files with 10 nums..." << endl;
-    
+    /* TODO put the numbers that are in the files into vectors, sort the numbers, put
+       the now sorted vector into new file, log sorting time for each unsorted list of numbers
+    */
   }
   return 0;
 }

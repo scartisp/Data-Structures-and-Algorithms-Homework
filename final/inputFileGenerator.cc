@@ -9,7 +9,6 @@ using std::to_string;
 using std::vector;
 #include <fstream>
 using std::ofstream;
-using std::ifstream;
 #include <random>
 using std::random_device;
 using std::mt19937;
@@ -21,7 +20,7 @@ static mt19937 gen(rd());
 static uniform_real_distribution<double> dist(-100.0, 100.0);
 
 
-void makeAllFiles() {
+vector<vector<string>> makeAllFiles() {
   vector<vector<string>> unsortedFiles(3, vector<string>(25));
   makeRanFiles(10, 0, unsortedFiles);
   makeRanFiles(100, 1, unsortedFiles);
