@@ -1,5 +1,5 @@
 // Simion Cartis
-#include "quicksort.h"
+#include "cartis_simion_quicksort.h"
 #include<iostream>
 using std::cout;
 using std::cin;
@@ -9,19 +9,18 @@ using std::vector;
 #include <algorithm>
 using std::swap;
 
-int main () {
-  vector<double> toSort = {5,4,1,54,4,5};
+void quickSort(vector<double>& toSort) {
+  // vector<double> toSort = {5,4,1,54,4,5};
   //vector<double> toSort = {3,2,1};
     quickSort(toSort, 0, toSort.size()-1);
   
-    for (int i = 0; i < toSort.size(); ++i) {
-      if (i == toSort.size()-1) {
-        cout << toSort[i] << endl;
-      } else {
-        cout << toSort[i] << ", ";
-      }
+  for (int i = 0; i < toSort.size(); ++i) {
+    if (i == toSort.size()-1) {
+      cout << toSort[i] << endl;
+    } else {
+      cout << toSort[i] << ", ";
     }
-  return 0;
+  }
 }
 
 void quickSort(vector<double>& toSort, int low, int high) {
