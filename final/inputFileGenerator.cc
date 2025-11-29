@@ -1,5 +1,4 @@
 // Simion Cartis
-#include "cartis_simion_quicksort.h"
 #include "inputFileGenerator.h"
 #include <iostream>
 using std::cerr;
@@ -21,24 +20,25 @@ static random_device rd;
 static mt19937 gen(rd());
 static uniform_real_distribution<double> dist(-100.0, 100.0);
 
-int main() {
-  makeRanFiles(10);
-  makeRanFiles(100);
-  makeRanFiles(1000);
 
-  
-  return 0;
+void makeAllFiles() {
+  vector<vector<string>> unsortedFiles(3, vector<string>(25));
+  makeRanFiles(10, 0, unsortedFiles);
+  makeRanFiles(100, 1, unsortedFiles);
+  makeRanFiles(1000, 2, unsortedFiles);
+  return unsortedFiles;
 }
 
-int makeRanFiles(int totalNums) {
+int makeRanFiles(int totalNums, int rowInVector, vector<vector<string>>& unsortedFiles) {
   for (int i = 0; i < 25; ++i) {
-
-    fileOut.open((to_string(totalNums)+"_randomNumbers_"+to_string(i+1)+".txt"));
+    string name = to_string(totalNums)+"_randomNumbers_"+to_string(i+1)+".txt";
+    unsortedFiles[rowInVector][i] = name;
+    fileOut.open(name);
     if (!fileOut) {
       cerr << "could not open file";
       return 1;
     }
-    for (int i = 0; i < totalNums; ++i) {
+    for (int j = 0; j < totalNums; ++j) {
       fileOut << dist(gen) << " ";
     }
     fileOut.close();

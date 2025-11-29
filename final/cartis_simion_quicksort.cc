@@ -1,5 +1,6 @@
 // Simion Cartis
 #include "cartis_simion_quicksort.h"
+#include "inputFileGenerator.h"
 #include<iostream>
 using std::cout;
 using std::cin;
@@ -8,19 +9,17 @@ using std::endl;
 using std::vector;
 #include <algorithm>
 using std::swap;
+#include <fstream>
+using std::ofstream;
+using std::ifstream;
 
-void quickSort(vector<double>& toSort) {
-  // vector<double> toSort = {5,4,1,54,4,5};
-  //vector<double> toSort = {3,2,1};
-    quickSort(toSort, 0, toSort.size()-1);
-  
-  for (int i = 0; i < toSort.size(); ++i) {
-    if (i == toSort.size()-1) {
-      cout << toSort[i] << endl;
-    } else {
-      cout << toSort[i] << ", ";
-    }
+int main(int argc, char* argv[]) {
+  if (argc == 1) {
+    vector<vector<string>> unsortedFiles = makeAllFiles();
+    cout << "sorting files with 10 nums..." << endl;
+    
   }
+  return 0;
 }
 
 void quickSort(vector<double>& toSort, int low, int high) {

@@ -6,13 +6,13 @@ TXT_FILES := $(wildcard *_randomNumbers_*.txt)
 
 all: quicksort
 
-cartis_simion_quicksort.o : cartis_simion_quicksort.cc cartis_simion_quicksort.h
-	$(compile) $<
-
 inputFileGenerator.o : inputFileGenerator.cc inputFileGenerator.h
 	$(compile) $<
 
-quicksort : cartis_simion_quicksort.o inputFileGenerator.o
+cartis_simion_quicksort.o : cartis_simion_quicksort.cc cartis_simion_quicksort.h
+	$(compile) $<
+
+quicksort : inputFileGenerator.o cartis_simion_quicksort.o
 	$(link) $^ -o $@
 	./$@
 
