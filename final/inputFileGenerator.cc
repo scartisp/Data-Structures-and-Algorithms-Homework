@@ -14,7 +14,7 @@ using std::random_device;
 using std::mt19937;
 using std::uniform_real_distribution;
 
-static ofstream fileOut;
+static ofstream fileOut; //TODO these don't need to be static
 static random_device rd;
 static mt19937 gen(rd());
 static uniform_real_distribution<double> dist(-100.0, 100.0);

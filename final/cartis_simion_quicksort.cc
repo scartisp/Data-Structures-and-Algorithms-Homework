@@ -10,6 +10,7 @@ using std::endl;
 using std::vector;
 #include <algorithm>
 using std::swap;
+#include <filesystem>
 #include <fstream>
 using std::ofstream;
 using std::ifstream;
@@ -20,46 +21,91 @@ using std::to_string;
 using namespace std::chrono;
 
 int main(int argc, char* argv[]) {
-  // if no arguments are added, run through randomly created files
+  // if no arguments are added, run through randomly created files (the example)
   if (argc == 1) {
-    vector<vector<string>> unsortedFiles = makeAllFiles();
-    cout << "sorting files with 10 nums..." << endl;
-    /* TODO put the numbers that are in the files into vectors, sort the numbers, put
-       the now sorted vector into new file, log sorting time for each unsorted list of numbers
-    */
-  } else {
+    string avgTimeFile = "average_times.txt"; // create the average time file,
+    ofstream createAvgTime(avgTimeFile); // don't add numbers yet, jsut the titles
+    if (!createAvgTime) {
+      cerr << "could not open average time file";
+      return 1;
+    }
+  createAvgTime << "Input Size\taverage execution time\n";
+  createAvgTime.close();
+  completeExample(makeAllFiles(), avgTimeFile);
+  } else { // arguments will just be [1] = input.txt [2] = ouput.txt
     string inputFile = argv[1];
     vector<double> toSort = fileToVector(inputFile);
     string outputFile = argv[2];
-    makeOutputFiles(outputFile, toSort);
-    // arguments will just be [1] = input.txt [2] = ouput.txt.
-    // do not have to find average time in this case, although should still ask professor
+    string elapseTimeFile = to_string(toSort.size())+"_elapseTime.txt";
+    writeElapseTime(makeOutputFile(outputFile, toSort), elapseTimeFile, toSort.size());
   }
   return 0;
 }
 
-void makeOutputFiles(string& outputFile, vector<double> toSort) {
+void completeExample(vector<vector<string>> unsortedFiles, string avgTimeFile) {
+  for (int i = 0; i < unsortedFiles.size(); ++i) { //outer for loop to get 
+                                                   //individually, each
+                                                   //grouping of unsorted files
+    double totalTime = 0;
+    for (int j = 0; j < unsortedFiles[i].size(); ++j) { //inner for loop to get each individual file
+      vector<double> toSort = fileToVector(unsortedFiles[i][j]);
+      string sortedFile = "sorted_"+unsortedFiles[i][j];
+      double elapseTime = makeOutputFile(sortedFile,toSort);
+      string exampleTimes = "example_times.txt";
+      writeElapseTime(elapseTime, exampleTimes, toSort.size(), true);
+      totalTime += elapseTime;
+    }
+    switch(i) { //switch statement to record average times for each goruping of files
+      case 0:
+        writeElapseTime(totalTime/25.0, avgTimeFile, 10, true);
+        break;
+      case 1:
+        writeElapseTime(totalTime/25.0, avgTimeFile, 100, true);
+        break;
+      case 2:
+        writeElapseTime(totalTime/25.0, avgTimeFile, 1000, true);
+        break;
+    }
+  }
+}
+
+double makeOutputFile(string outputFile, vector<double> toSort) {
   ofstream writeToSorted(outputFile);
   if (!writeToSorted) {
     cerr << "cannot write to sorted ouput file";
+    return -1;
   }
-  auto start = high_resolution_clock::now();
+  auto start = high_resolution_clock::now(); //start time for quicksort
   quickSort(toSort, 0, toSort.size()-1);
-  auto stop = high_resolution_clock::now();
+  auto stop = high_resolution_clock::now(); //end time for quicksort
 
   for (int i = 0; i < toSort.size(); ++i) {
     writeToSorted << toSort[i] << " ";
   }
   writeToSorted.close();
 
-  auto duration_us = duration_cast<microseconds>(stop-start);
-  double seconds = duration<double>(stop - start).count(); // I HAVE NO CLUE IF THIS TIME THING IS CORRECT
-  ofstream writeToTime(to_string(toSort.size())+"_elapseTime.txt");
+  return duration<double, std::micro>(stop - start).count(); //return a double
+                                                             //representation of the 
+                                                             //difference between stop
+                                                             //and start, shown in microseconds
+}
+
+void writeElapseTime(double microseconds, string ElapseTimeFile, int inputSize, bool example) {
+  ofstream writeToTime;
+  if (example) //if called by completeExample, need to append to file
+    writeToTime.open(ElapseTimeFile, std::ios::app);
+  else
+    writeToTime.open(ElapseTimeFile);
   if (!writeToTime) {
     cerr << "cannot write to elapse time file";
+    return;
   }
-  writeToTime << "Input Size\texecution time\n" << toSort.size() << "\t\t\t\t" <<
-                  seconds;
+  if (std::filesystem::file_size(ElapseTimeFile) == 0) {//add titles only if file is empty
+    writeToTime << "Input Size\texecution time\n" << inputSize << "\t\t\t\t" <<
+                    microseconds << "\n";
+  } else {
+    writeToTime << inputSize << "\t\t\t\t" << microseconds << "\n";
+  }
   writeToTime.close();
 }
 
