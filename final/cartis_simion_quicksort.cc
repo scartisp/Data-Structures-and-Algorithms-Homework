@@ -2,6 +2,7 @@
 #include "cartis_simion_quicksort.h"
 #include "inputFileGenerator.h"
 #include<iostream>
+using std::cerr;
 using std::cout;
 using std::cin;
 using std::endl;
@@ -12,17 +13,71 @@ using std::swap;
 #include <fstream>
 using std::ofstream;
 using std::ifstream;
+#include <string>
+using std::string;
+using std::to_string;
+#include <chrono>
+using namespace std::chrono;
 
 int main(int argc, char* argv[]) {
+  // if no arguments are added, run through randomly created files
   if (argc == 1) {
     vector<vector<string>> unsortedFiles = makeAllFiles();
     cout << "sorting files with 10 nums..." << endl;
     /* TODO put the numbers that are in the files into vectors, sort the numbers, put
        the now sorted vector into new file, log sorting time for each unsorted list of numbers
     */
+  } else {
+    string inputFile = argv[1];
+    vector<double> toSort = fileToVector(inputFile);
+    string outputFile = argv[2];
+    makeOutputFiles(outputFile, toSort);
+    // arguments will just be [1] = input.txt [2] = ouput.txt.
+    // do not have to find average time in this case, although should still ask professor
   }
   return 0;
 }
+
+void makeOutputFiles(string& outputFile, vector<double> toSort) {
+  ofstream writeToSorted(outputFile);
+  if (!writeToSorted) {
+    cerr << "cannot write to sorted ouput file";
+  }
+  auto start = high_resolution_clock::now();
+  quickSort(toSort, 0, toSort.size()-1);
+  auto stop = high_resolution_clock::now();
+
+  for (int i = 0; i < toSort.size(); ++i) {
+    writeToSorted << toSort[i] << " ";
+  }
+  writeToSorted.close();
+
+  auto duration_us = duration_cast<microseconds>(stop-start);
+  double seconds = duration<double>(stop - start).count(); // I HAVE NO CLUE IF THIS TIME THING IS CORRECT
+  ofstream writeToTime(to_string(toSort.size())+"_elapseTime.txt");
+  if (!writeToTime) {
+    cerr << "cannot write to elapse time file";
+  }
+  writeToTime << "Input Size\texecution time\n" << toSort.size() << "\t\t\t\t" <<
+                  seconds;
+  writeToTime.close();
+}
+
+vector<double> fileToVector(string inputFile) {
+  ifstream read(inputFile);
+  if (!read) {
+    cerr << "could not open input file";
+  }
+  vector<double> nums;
+  double x;
+  while (read >> x) {
+    nums.push_back(x);
+  }
+  read.close();
+  return nums;
+}
+
+
 
 void quickSort(vector<double>& toSort, int low, int high) {
   if (low < high) {
