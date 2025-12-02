@@ -23,7 +23,7 @@ using namespace std::chrono;
 int main(int argc, char* argv[]) {
   // if no arguments are added, run through randomly created files (the example)
   if (argc == 1) {
-    string avgTimeFile = "average_times.txt"; // create the average time file,
+    string avgTimeFile = "cartis_simion_averageExecutionTime.txt"; // create the average time file,
     ofstream createAvgTime(avgTimeFile); // don't add numbers yet, jsut the titles
     if (!createAvgTime) {
       cerr << "could not open average time file";
@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
     string inputFile = argv[1];
     vector<double> toSort = fileToVector(inputFile);
     string outputFile = argv[2];
-    string elapseTimeFile = to_string(toSort.size())+"_elapseTime.txt";
+    string elapseTimeFile = "cartis_simion_"+to_string(+toSort.size())+"_executionTime.txt";
     writeElapseTime(makeOutputFile(outputFile, toSort), elapseTimeFile, toSort.size());
   }
   return 0;
@@ -51,7 +51,7 @@ void completeExample(vector<vector<string>> unsortedFiles, string avgTimeFile) {
       vector<double> toSort = fileToVector(unsortedFiles[i][j]);
       string sortedFile = "sorted_"+unsortedFiles[i][j];
       double elapseTime = makeOutputFile(sortedFile,toSort);
-      string exampleTimes = "example_times.txt";
+      string exampleTimes = "cartis_simion_executionTime.txt";
       writeElapseTime(elapseTime, exampleTimes, toSort.size(), true);
       totalTime += elapseTime;
     }

@@ -4,7 +4,7 @@ compile = $(compiler) $(flags) -c
 link = $(compiler) $(flags)
 TXT_FILES := $(wildcard *.txt)
 
-all: quicksort
+all: cartis_simion_QuickSort
 
 inputFileGenerator.o : inputFileGenerator.cc inputFileGenerator.h
 	$(compile) $<
@@ -12,8 +12,8 @@ inputFileGenerator.o : inputFileGenerator.cc inputFileGenerator.h
 cartis_simion_quicksort.o : cartis_simion_quicksort.cc cartis_simion_quicksort.h
 	$(compile) $<
 
-quicksort : inputFileGenerator.o cartis_simion_quicksort.o
+cartis_simion_QuickSort : inputFileGenerator.o cartis_simion_quicksort.o
 	$(link) $^ -o $@
 
 clean :
-	rm *.o quicksort $(TXT_FILES)
+	rm *.o cartis_simion_QuickSort $(TXT_FILES)
