@@ -1,6 +1,6 @@
 # Data Structures and algorithms final project: quicksort time efficency
 
-this project implements and measures the time efficiency of quicksort using the median-of-three method by reading from file(s) containing unsorted floating point numbers, sorting the numbers using quicksort, and creating an output file containing the sorted numbers. Additionally, a file containing the exeuction time is created. all input and output files are .txt ASCII plain text.
+this project implements and measures the time efficiency of quicksort using the median-of-three method by reading from file(s) containing unsorted floating point numbers, sorting the numbers using quicksort, and creating an output file containing the sorted numbers. Additionally, a file containing the exeuction time is created. all input and output files are .txt ASCII plain text. All execution times are measured in microseconds
 
 The example will generate 25 .txt files for each input size; 10, 100, 1000 (75 input .txt files in total). The files will contain random, unsorted floating point numbers ranging from -100 to 100 and are seperated by a space.
 

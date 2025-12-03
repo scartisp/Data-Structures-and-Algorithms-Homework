@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
       cerr << "could not open average time file";
       return 1;
     }
-  createAvgTime << "Input Size\taverage execution time\n";
+  createAvgTime << "Input Size\taverage execution time (in microseconds)\n";
   createAvgTime.close();
   completeExample(makeAllFiles(), avgTimeFile);
   } else { // arguments will just be [1] = input.txt [2] = ouput.txt
@@ -101,10 +101,10 @@ void writeElapseTime(double microseconds, string ElapseTimeFile, int inputSize, 
     return;
   }
   if (std::filesystem::file_size(ElapseTimeFile) == 0) {//add titles only if file is empty
-    writeToTime << "Input Size\texecution time\n" << inputSize << "\t\t\t\t" <<
+    writeToTime << "Input Size\texecution time (in microseconds)\n" << inputSize << "\t" <<
                     microseconds << "\n";
   } else {
-    writeToTime << inputSize << "\t\t\t\t" << microseconds << "\n";
+    writeToTime << inputSize << "\t" << microseconds << "\n";
   }
   writeToTime.close();
 }

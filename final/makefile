@@ -6,10 +6,10 @@ TXT_FILES := $(wildcard *.txt)
 
 all: cartis_simion_QuickSort
 
-inputFileGenerator.o : inputFileGenerator.cc inputFileGenerator.h
+inputFileGenerator.o : inputFileGenerator.cpp inputFileGenerator.h
 	$(compile) $<
 
-cartis_simion_quicksort.o : cartis_simion_quicksort.cc cartis_simion_quicksort.h
+cartis_simion_quicksort.o : cartis_simion_quicksort.cpp cartis_simion_quicksort.h
 	$(compile) $<
 
 cartis_simion_QuickSort : inputFileGenerator.o cartis_simion_quicksort.o
