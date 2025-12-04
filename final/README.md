@@ -24,7 +24,7 @@ deletes the executable cartis_simion_QuickSort, all object files, and all .txt f
 # how to run
 once you run "make all", you will have the executable cartis_simion_QuickSort.
 
-To run the example file, simply write "./cartis_simion_QuickSort" inside of your terminal
+To run the example, simply write "./cartis_simion_QuickSort" inside of your terminal
 
 To run the program with a pre-made input .txt file, in addition to the above execution command (./cartis_simion_QuickSort), include the name of your desired input file, followed by the name of your desired output file. each part should be seperated by a space.
 
